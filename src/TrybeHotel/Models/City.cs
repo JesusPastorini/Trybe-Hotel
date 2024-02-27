@@ -9,6 +9,6 @@ namespace TrybeHotel.Models
         public int CityId { get; set; }
         public string? Name { get; set; }
 
-        public List<Hotel>? Hotels { get; set; }
+        public List<Hotel>? Hotels { get; set; } = new List<Hotel>();
     }
 }
