@@ -25,7 +25,10 @@ namespace TrybeHotel.Controllers
         [HttpPost]
         public IActionResult PostCity([FromBody] City city)
         {
-            throw new NotImplementedException();
+            var result = _repository.AddCity(city);
+
+            // Retorna o resultado com o status 201 Created
+            return CreatedAtAction(nameof(PostCity), new { id = result.CityId }, result);
         }
     }
 }
