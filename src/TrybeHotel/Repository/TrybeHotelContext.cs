@@ -14,6 +14,9 @@ public class TrybeHotelContext : DbContext, ITrybeHotelContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var connectionString = "Server=localhost;Database=TrybeHotel;User=SA;Password=TrybeHotel12!;TrustServerCertificate=True";
-        optionsBuilder.UseSqlServer(connectionString);
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(connectionString);
+        }
     }
 }
