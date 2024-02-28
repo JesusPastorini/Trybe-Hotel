@@ -42,73 +42,39 @@ namespace TrybeHotel.Repository
         // 7. Desenvolva o endpoint POST /room
         public RoomDto AddRoom(Room room)
         {
-            // Verifica se o quarto já existe no banco de dados
-            var existingRoom = _context.Rooms.FirstOrDefault(r => r.Name == room.Name && r.HotelId == room.Hotel.HotelId);
-
-            if (existingRoom != null)
+            // Adiciona o novo quarto ao contexto e salva as mudanças no banco de dados
+            _context.Rooms.Add(room);
+            _context.SaveChanges();
+            // Se o quarto já existe, retorna o existente
+            return new RoomDto
             {
-                // Se o quarto já existe, retorna o existente
-                return new RoomDto
-                {
-                    RoomId = existingRoom.RoomId,
-                    Name = existingRoom.Name,
-                    Capacity = existingRoom.Capacity,
-                    Image = existingRoom.Image,
-                    Hotel = new HotelDto
-                    {
-                        HotelId = existingRoom.Hotel.HotelId,
-                        Name = existingRoom.Hotel.Name,
-                        Address = existingRoom.Hotel.Address,
-                        CityId = existingRoom.Hotel.City.CityId,
-                        CityName = existingRoom.Hotel.City.Name
-                    }
-                };
-            }
-
-            // Verifica se o hotel associado ao quarto existe
-            var existingHotel = _context.Hotels.FirstOrDefault(h => h.HotelId == room.Hotel.HotelId);
-
-            if (existingHotel == null)
-            {
-                // Se o hotel não existe, retorna erro
-                return null;
-            }
-
-            // Cria um novo quarto
-            var newRoom = new Room
-            {
+                RoomId = room.RoomId,
                 Name = room.Name,
                 Capacity = room.Capacity,
                 Image = room.Image,
-                HotelId = room.Hotel.HotelId
-            };
-
-            // Adiciona o novo quarto ao contexto e salva as mudanças no banco de dados
-            _context.Rooms.Add(newRoom);
-            _context.SaveChanges();
-
-            // Retorna os dados do novo quarto
-            return new RoomDto
-            {
-                RoomId = newRoom.RoomId,
-                Name = newRoom.Name,
-                Capacity = newRoom.Capacity,
-                Image = newRoom.Image,
-                Hotel = new HotelDto
+                Hotel = _context.Hotels.Where(h => h.HotelId == room.HotelId).Select(h => new HotelDto
                 {
-                    HotelId = newRoom.Hotel.HotelId,
-                    Name = newRoom.Hotel.Name,
-                    Address = newRoom.Hotel.Address,
-                    CityId = newRoom.Hotel.City.CityId,
-                    CityName = newRoom.Hotel.City.Name
-                }
+                    HotelId = h.HotelId,
+                    Name = h.Name,
+                    Address = h.Address,
+                    CityId = h.CityId,
+                    CityName = _context.Cities.Where(c => c.CityId == h.CityId).Select(c => c.Name).FirstOrDefault()
+                }).FirstOrDefault()
             };
         }
 
         // 8. Desenvolva o endpoint DELETE /room/:roomId
         public void DeleteRoom(int RoomId)
         {
-            throw new NotImplementedException();
+            // Busca o quarto no banco de dados
+            var room = _context.Rooms.FirstOrDefault(r => r.RoomId == RoomId);
+
+            if (room != null)
+            {
+                // Remove o quarto do contexto e salva as mudanças no banco de dados
+                _context.Rooms.Remove(room);
+                _context.SaveChanges();
+            }
         }
     }
 }
