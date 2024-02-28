@@ -28,7 +28,16 @@ namespace TrybeHotel.Controllers
         [HttpPost]
         public IActionResult PostRoom([FromBody] Room room)
         {
-            throw new NotImplementedException();
+            var result = _repository.AddRoom(room);
+
+            if (result == null)
+            {
+                // Se o hotel associado não existe, retorna erro com status 400 Bad Request
+                return BadRequest("Hotel not found");
+            }
+
+            // Retorna o resultado com o status 201 Created
+            return CreatedAtAction(nameof(PostRoom), new { id = result.RoomId }, result);
         }
 
         // 8. Desenvolva o endpoint DELETE /room/:roomId
