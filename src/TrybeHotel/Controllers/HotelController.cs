@@ -30,7 +30,16 @@ namespace TrybeHotel.Controllers
         [HttpPost]
         public IActionResult PostHotel([FromBody] Hotel hotel)
         {
-            throw new NotImplementedException();
+            var result = _repository.AddHotel(hotel);
+
+            if (result == null)
+            {
+                // Se a cidade não existe, erro com status 400 Bad Request
+                return BadRequest("City not found");
+            }
+
+            // Retorna o resultado com o status 201 Created
+            return CreatedAtAction(nameof(PostHotel), new { id = result.HotelId }, result);
         }
 
 
