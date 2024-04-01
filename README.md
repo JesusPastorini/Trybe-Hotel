@@ -61,7 +61,7 @@ O projeto Trybe Hotel consiste no desenvolvimento de uma API para controle de ci
 
 ## 🔗 Diagrama de Entidade-Relacionamento (DER)
 
-![Diagrama de Entidade-Relacionamento](link_para_o_diagrama)
+![Diagrama de Entidade-Relacionamento](src/derr.png)
 
 ## 🐳 Docker
 
