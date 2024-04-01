@@ -4,6 +4,10 @@
 
 O projeto Trybe Hotel consiste no desenvolvimento de uma API para controle de cidades, hotéis e quartos, que será utilizada em uma aplicação de booking de várias redes de hotéis. A API permitirá listar cidades, hotéis, inserir novas cidades e hotéis, além de manipular quartos de hotéis.
 
+## 🔗 Diagrama de Entidade-Relacionamento (DER)
+
+![Diagrama de Entidade-Relacionamento](src/derr.png)
+
 ## 🛠️ Tecnologias e Habilidades
 
 - **Plataforma Utilizada:** ASP.NET Core
@@ -58,10 +62,6 @@ O projeto Trybe Hotel consiste no desenvolvimento de uma API para controle de ci
    - Método `Delete(int roomId)` no arquivo `/src/TrybeHotel/Controllers/RoomController.cs`.
    - Lógica de interação com o banco de dados no método `DeleteRoom(int roomId)` do arquivo `/src/TrybeHotel/Repository/RoomRepository.cs`.
    - Remoção do quarto com o ID fornecido.
-
-## 🔗 Diagrama de Entidade-Relacionamento (DER)
-
-![Diagrama de Entidade-Relacionamento](src/derr.png)
 
 ## 🐳 Docker
 
